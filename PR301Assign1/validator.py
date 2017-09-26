@@ -100,22 +100,9 @@ class Validator(IFileValidator):
 
     # Rosemary
     def check_all(self, employee_attributes):
-        if not self.check_birthday(employee_attributes["BIRTHDAY"]):
-            return False
-        if not self.check_id(employee_attributes["EMPID"]):
-            return False
-        if not self.check_age(employee_attributes["AGE"]):
-            return False
-        if not self.check_gender(employee_attributes["GENDER"]):
-            return False
-        if not self.check_sales(employee_attributes["SALES"]):
-            return False
-        if not self.check_bmi(employee_attributes["BMI"]):
-            return False
-        if not self.check_salary(employee_attributes["SALARY"]):
-            return False
-        if not self.check_birthday_against_age(employee_attributes["BIRTHDAY"], employee_attributes["AGE"]):
-            return False
+        for attribute in employee_attributes:
+            if not self.check_field(attribute, employee_attributes[attribute]):
+                return False
         return True
 
     # Rosemary
