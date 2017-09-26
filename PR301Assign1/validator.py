@@ -20,31 +20,7 @@ class IFileValidator(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def check_id(self, emp_id):
-        pass
-
-    @abstractmethod
-    def check_age(self, age):
-        pass
-
-    @abstractmethod
-    def check_sales(self, sales):
-        pass
-
-    @abstractmethod
-    def check_bmi(self, bmi):
-        pass
-
-    @abstractmethod
-    def check_salary(self, salary):
-        pass
-
-    @abstractmethod
     def check_birthday(self, birthday):
-        pass
-
-    @abstractmethod
-    def check_gender(self, gender):
         pass
 
     @abstractmethod
@@ -104,100 +80,6 @@ class Validator(IFileValidator):
             if not self.check_field(attribute, employee_attributes[attribute]):
                 return False
         return True
-
-    # Rosemary
-    def check_id(self, emp_id):
-        # Tim
-        """
-        >>> v = Validator()
-        >>> v.check_id('M000')
-        True
-        >>> v.check_id('F999')
-        True
-        >>> v.check_id('m000')
-        False
-        >>> v.check_id('F9999')
-        False
-        >>> v.check_id('MMMM')
-        False
-        >>> v.check_id('0000')
-        False
-        >>> v.check_id('000')
-        False
-        >>> v.check_id('M00')
-        False
-        >>> v.check_id(None)
-        False
-        >>> v.check_id(1)
-        False
-        >>> v.check_id(True)
-        False
-        >>> v.check_id({'M00'})
-        False
-        """
-        return self.check_field("EMPID", emp_id)
-
-    # Tim
-    def check_age(self, age):
-        return self.check_field("AGE", age)
-
-    # Hasitha
-    def check_gender(self, gender):
-        # Tim
-        """
-        >>> v = Validator()
-        >>> v.check_gender('M')
-        True
-        >>> v.check_gender('F')
-        True
-        >>> v.check_gender('MF')
-        False
-        >>> v.check_gender('m')
-        False
-        >>> v.check_gender('f')
-        False
-        >>> v.check_gender(1)
-        False
-        >>> v.check_gender(True)
-        False
-        >>> v.check_gender(None)
-        False
-        """
-        return self.check_field("GENDER", gender)
-
-    # Rosemary
-    def check_sales(self, sales):
-        # Tim
-        """
-        >>> v = Validator()
-        >>> v.check_sales(-1)
-        False
-        >>> v.check_sales('000')
-        True
-        >>> v.check_sales('001')
-        True
-        >>> v.check_sales(2.5)
-        False
-        >>> v.check_sales('999')
-        True
-        >>> v.check_sales('1000')
-        False
-        >>> v.check_sales("1")
-        False
-        >>> v.check_sales(1)
-        False
-        >>> v.check_sales(999)
-        False
-        """
-        return self.check_field("SALES", sales)
-
-    # Hasitha
-    def check_bmi(self, bmi):
-        return self.check_field("BMI", bmi)
-
-    # Hasitha
-    def check_salary(self, salary):
-        return self.check_field("SALARY", salary)
 
     # Tim
     def check_birthday(self, birthday):
