@@ -105,72 +105,72 @@ class RefactorTests(unittest.TestCase):
     def test_check_all__id_invalid(self):
         v = Validator()
         self.assertFalse(v.check_all({'EMPID': 'A0e01',
-                                     'GENDER': 'F',
-                                     'AGE': '21',
-                                     'SALES': '001',
-                                     'BMI': 'Normal',
-                                     'SALARY': '12',
-                                     'BIRTHDAY': '1-1-1996'}))
+                                      'GENDER': 'F',
+                                      'AGE': '21',
+                                      'SALES': '001',
+                                      'BMI': 'Normal',
+                                      'SALARY': '12',
+                                      'BIRTHDAY': '1-1-1996'}))
 
     def test_check_all_gender_invalid(self):
         v = Validator()
         self.assertFalse(v.check_all({'EMPID': 'A001',
-                                     'GENDER': 'eF',
-                                     'AGE': '21',
-                                     'SALES': '001',
-                                     'BMI': 'Normal',
-                                     'SALARY': '12',
-                                     'BIRTHDAY': '1-1-1996'}))
+                                      'GENDER': 'eF',
+                                      'AGE': '21',
+                                      'SALES': '001',
+                                      'BMI': 'Normal',
+                                      'SALARY': '12',
+                                      'BIRTHDAY': '1-1-1996'}))
 
     def test_check_all__age_invalid(self):
         v = Validator()
         self.assertFalse(v.check_all({'EMPID': 'A001',
-                                     'GENDER': 'F',
-                                     'AGE': 'f21',
-                                     'SALES': '001',
-                                     'BMI': 'Normal',
-                                     'SALARY': '12',
-                                     'BIRTHDAY': '1-1-1996'}))
+                                      'GENDER': 'F',
+                                      'AGE': 'f21',
+                                      'SALES': '001',
+                                      'BMI': 'Normal',
+                                      'SALARY': '12',
+                                      'BIRTHDAY': '1-1-1996'}))
 
     def test_check_all_sales_invalid(self):
         v = Validator()
         self.assertFalse(v.check_all({'EMPID': 'A001',
-                                     'GENDER': 'F',
-                                     'AGE': '21',
-                                     'SALES': '0f01',
-                                     'BMI': 'Normal',
-                                     'SALARY': '12',
-                                     'BIRTHDAY': '1-1-1996'}))
+                                      'GENDER': 'F',
+                                      'AGE': '21',
+                                      'SALES': '0f01',
+                                      'BMI': 'Normal',
+                                      'SALARY': '12',
+                                      'BIRTHDAY': '1-1-1996'}))
 
     def test_check_all__bmi_invalid(self):
         v = Validator()
         self.assertFalse(v.check_all({'EMPID': 'A001',
-                                     'GENDER': 'F',
-                                     'AGE': '21',
-                                     'SALES': '001',
-                                     'BMI': 'Nofrmal',
-                                     'SALARY': '12',
-                                     'BIRTHDAY': '1-1-1996'}))
+                                      'GENDER': 'F',
+                                      'AGE': '21',
+                                      'SALES': '001',
+                                      'BMI': 'Nofrmal',
+                                      'SALARY': '12',
+                                      'BIRTHDAY': '1-1-1996'}))
 
     def test_check_all_salary_invalid(self):
         v = Validator()
         self.assertFalse(v.check_all({'EMPID': 'A001',
-                                     'GENDER': 'F',
-                                     'AGE': '21',
-                                     'SALES': '001',
-                                     'BMI': 'Normal',
-                                     'SALARY': '1f2',
-                                     'BIRTHDAY': '1-1-1996'}))
+                                      'GENDER': 'F',
+                                      'AGE': '21',
+                                      'SALES': '001',
+                                      'BMI': 'Normal',
+                                      'SALARY': '1f2',
+                                      'BIRTHDAY': '1-1-1996'}))
 
     def test_check_all_birthday_invalid(self):
         v = Validator()
         self.assertFalse(v.check_all({'EMPID': 'A001',
-                                     'GENDER': 'F',
-                                     'AGE': '21',
-                                     'SALES': '001',
-                                     'BMI': 'Normal',
-                                     'SALARY': '12',
-                                     'BIRTHDAY': '1-1-19296'}))
+                                      'GENDER': 'F',
+                                      'AGE': '21',
+                                      'SALES': '001',
+                                      'BMI': 'Normal',
+                                      'SALARY': '12',
+                                      'BIRTHDAY': '1-1-19296'}))
 
 suite = unittest.TestLoader().loadTestsFromTestCase(RefactorTests)
 unittest.TextTestRunner(verbosity=1).run(suite)
