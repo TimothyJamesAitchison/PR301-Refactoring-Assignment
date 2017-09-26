@@ -148,29 +148,11 @@ class Validator(IFileValidator):
         >>> v.check_id({'M00'})
         False
         """
-        # Should be in form of [A-Z][0-9]{3}
-        # Exception handling by Tim
-        try:
-            if not self.rules.check_field("EMPID", emp_id):
-                print('{} is invalid!'.format(emp_id), file=sys.stderr)
-                return False
-            else:
-                # Failing to invalidate is a success
-                return True
-        except TypeError:
-            return False
+        return self.check_field("EMPID", emp_id)
 
     # Tim
     def check_age(self, age):
-        # Should be between 1-99
-        try:
-            if not self.rules.check_field("AGE", age):
-                print('{} is invalid age!'.format(age), file=sys.stderr)
-                return False
-        except TypeError:
-            return False
-        # Failing to invalidate is a success
-        return True
+        return self.check_field("AGE", age)
 
     # Hasitha
     def check_gender(self, gender):
@@ -194,15 +176,7 @@ class Validator(IFileValidator):
         >>> v.check_gender(None)
         False
         """
-        # Exception handling by Tim
-        try:
-            if not self.rules.check_field("GENDER", gender):
-                print('{} is invalid gender!'.format(gender), file=sys.stderr)
-                return False
-        except TypeError:
-            return False
-        # Failing to invalidate is a success
-        return True
+        return self.check_field("GENDER", gender)
 
     # Rosemary
     def check_sales(self, sales):
@@ -228,38 +202,15 @@ class Validator(IFileValidator):
         >>> v.check_sales(999)
         False
         """
-        try:
-            if not self.rules.check_field("SALES", sales):
-                print('{} is invalid sales!'.format(sales), file=sys.stderr)
-                return False
-        except TypeError:
-            return False
-        # Failing to invalidate is a success
-        return True
+        return self.check_field("SALES", sales)
 
     # Hasitha
     def check_bmi(self, bmi):
-        # Exception handling by Tim
-        try:
-            if not self.rules.check_field("BMI", bmi):
-                print('{} is invalid BMI!'.format(bmi), file=sys.stderr)
-                return False
-        except TypeError:
-            return False
-        # Failing to invalidate is a success
-        return True
+        return self.check_field("BMI", bmi)
 
     # Hasitha
     def check_salary(self, salary):
-        # Exception handling by Tim
-        try:
-            if not self.rules.check_field("SALARY", salary):
-                print('{} is invalid Salary!'.format(salary), file=sys.stderr)
-                return False
-        except TypeError:
-            return False
-        # Failing to invalidate is a success
-        return True
+        return self.check_field("SALARY", salary)
 
     # Tim
     def check_birthday(self, birthday):
@@ -276,6 +227,16 @@ class Validator(IFileValidator):
         except AttributeError:
             print('The date was in an invalid format', file=sys.stderr)
             return False
+
+    def check_field(self, field, value):
+        try:
+            if not self.rules.check_field(field, value):
+                print('{0} is invalid {1}!'.format(value, field), file=sys.stderr)
+                return False
+        except TypeError:
+            return False
+        else:
+            return True
 
     # Tim
     def check_birthday_against_age(self, birthday, age):
