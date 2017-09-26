@@ -1,8 +1,8 @@
 from __future__ import print_function
 import sys
 from abc import ABCMeta, abstractmethod
-import re
 import datetime as date
+from rule_checker import RuleChecker
 
 
 # Tim
@@ -56,14 +56,16 @@ class Validator(IFileValidator):
 
     # Tim
     def __init__(self):
-        self.id_rule = "^[A-Z][0-9]{3}$"
-        self.gender_rule = "^(M|F)$"
-        self.age_rule = "^[0-9]{2}$"
-        self.sales_rule = "^[0-9]{3}$"
-        self.bmi_rule = "^(Normal|Overweight|Obesity|Underweight)$"
-        self.salary_rule = "^[0-9]{2,3}$"
-        self.birthday_rule = "^[1-31]-[1-12]-[0-9]{4}$"
-        self.attributes = {"EMPID", "GENDER", "AGE", "SALES", "BMI", "SALARY", "BIRTHDAY"}
+        self.rules = RuleChecker()
+        self.rules.add_rule('EMPID', "^[A-Z][0-9]{3}$")
+        self.rules.add_rule('GENDER', "^(M|F)$")
+        self.rules.add_rule('AGE', "^[0-9]{2}$")
+        self.rules.add_rule('SALES', "^[0-9]{3}$")
+        self.rules.add_rule('BMI', "^(Normal|Overweight|Obesity|Underweight)$")
+        self.rules.add_rule('SALARY', "^[0-9]{2,3}$")
+        self.rules.add_rule('BIRTHDAY', "^[1-31]-[1-12]-[0-9]{4}$")
+
+        self.attributes = self.rules.get_fields()
         self.number_of_attributes = len(self.attributes)
 
     # Tim
@@ -149,7 +151,7 @@ class Validator(IFileValidator):
         # Should be in form of [A-Z][0-9]{3}
         # Exception handling by Tim
         try:
-            if not re.match(self.id_rule, emp_id):
+            if not self.rules.check_field("EMPID", emp_id):
                 print('{} is invalid!'.format(emp_id), file=sys.stderr)
                 return False
             else:
@@ -162,7 +164,7 @@ class Validator(IFileValidator):
     def check_age(self, age):
         # Should be between 1-99
         try:
-            if not re.match(self.age_rule, str(age)):
+            if not self.rules.check_field("AGE", age):
                 print('{} is invalid age!'.format(age), file=sys.stderr)
                 return False
         except TypeError:
@@ -194,7 +196,7 @@ class Validator(IFileValidator):
         """
         # Exception handling by Tim
         try:
-            if not re.match(self.gender_rule, gender):
+            if not self.rules.check_field("GENDER", gender):
                 print('{} is invalid gender!'.format(gender), file=sys.stderr)
                 return False
         except TypeError:
@@ -227,7 +229,7 @@ class Validator(IFileValidator):
         False
         """
         try:
-            if not re.match(self.sales_rule, sales):
+            if not self.rules.check_field("SALES", sales):
                 print('{} is invalid sales!'.format(sales), file=sys.stderr)
                 return False
         except TypeError:
@@ -239,7 +241,7 @@ class Validator(IFileValidator):
     def check_bmi(self, bmi):
         # Exception handling by Tim
         try:
-            if not re.match(self.bmi_rule, bmi):
+            if not self.rules.check_field("BMI", bmi):
                 print('{} is invalid BMI!'.format(bmi), file=sys.stderr)
                 return False
         except TypeError:
@@ -251,7 +253,7 @@ class Validator(IFileValidator):
     def check_salary(self, salary):
         # Exception handling by Tim
         try:
-            if not re.match(self.salary_rule, salary):
+            if not self.rules.check_field("SALARY", salary):
                 print('{} is invalid Salary!'.format(salary), file=sys.stderr)
                 return False
         except TypeError:
