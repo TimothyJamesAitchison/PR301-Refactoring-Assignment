@@ -1,18 +1,19 @@
 from __future__ import print_function
 from file_reader import *
+import re
 
 
 class FileHandler:
     def __init__(self, new_validator):
         self.validator = new_validator
-        self.file_types = {'.csv': CSVReader(self.validator),
-                           '.txt': TXTReader(self.validator),
-                           '.xlsx': XLSXReader(self.validator)}
+        self.file_types = {'.csv': CSVReader(),
+                           '.txt': TXTReader(),
+                           '.xlsx': XLSXReader()}
 
     def open(self, file_path):
         file_extension = re.search(r'\..+$', file_path).group()
         if file_extension in self.file_types:
-            return self.file_types[file_extension].read_file(file_path)
+            return self.file_types[file_extension].read_file(file_path, self.validator)
         else:
             print('Invalid file extension', file=sys.stderr)
             return False

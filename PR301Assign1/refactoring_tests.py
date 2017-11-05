@@ -172,5 +172,7 @@ class RefactorTests(unittest.TestCase):
                                       'SALARY': '12',
                                       'BIRTHDAY': '1-1-19296'}))
 
+
 suite = unittest.TestLoader().loadTestsFromTestCase(RefactorTests)
+
 unittest.TextTestRunner(verbosity=1).run(suite)
