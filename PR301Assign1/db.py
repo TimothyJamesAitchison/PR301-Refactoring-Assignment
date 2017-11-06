@@ -100,3 +100,22 @@ class DatabaseHandler:
             employees = sql_result.fetchall()
             self.close_db()
             return employees
+
+    def get_all(self):
+        self.open_db()
+        sql_result = self._cursor.execute('SELECT * FROM employee')
+        results = sql_result.fetchall()
+        self.close_db()
+        employees = []
+        for data in results:
+            employee = {}
+            employee["EMPID"] = data[0]
+            employee["GENDER"] = data[1]
+            employee["AGE"] = data[2]
+            employee["SALES"] = data[3]
+            employee["BMI"] = data[4]
+            employee["SALARY"] = data[5]
+            employee["BIRTHDAY"] = data[6]
+            employees.append(employee)
+        return employees
+

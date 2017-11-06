@@ -9,7 +9,10 @@ class View:
     # Tim
     @staticmethod
     def display(list_of_dictionaries):
+        count = 0
         for dictionary in list_of_dictionaries:
+            count += 1
+            print("======== Employee {0} ==========".format(count))
             for key in dictionary:
                 print("{0} = {1}".format(key, dictionary[key]))
 

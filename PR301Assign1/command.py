@@ -110,3 +110,6 @@ class Command(cmd.Cmd):
     # Rosemary
     def help_reload(self):
         print(self.file_handler.open_help('reload'))
+
+    def do_getall(self, arg):
+        self.view.display(self.db.get_all())
