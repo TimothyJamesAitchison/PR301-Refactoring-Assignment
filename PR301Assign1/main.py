@@ -16,6 +16,17 @@ try:
 except FileNotFoundError:
     database = DatabaseHandler(Validator(), database_name)
     database.load()
-    pickle.dump(database, open(database_name+".p", "wb"))
-cli = Command(FileHandler(Validator()), database, View())
+    try:
+        pickle.dump(database, open(database_name+".p", "wb"))
+    except TypeError:
+        pass
+except EOFError:
+    database = DatabaseHandler(Validator(), database_name)
+    database.load()
+    try:
+        pickle.dump(database, open(database_name+".p", "wb"))
+    except TypeError:
+        pass
+view = View()
+cli = Command(FileHandler(Validator()), database, view)
 cli.cmdloop()

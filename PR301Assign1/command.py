@@ -10,6 +10,7 @@ class Command(cmd.Cmd):
         self.file_handler = new_file_handler
         self.db = new_db
         self.view = new_view
+        self.db.attach(self.view)
 
     @staticmethod
     def do_quit(arg):
@@ -112,4 +113,4 @@ class Command(cmd.Cmd):
         print(self.file_handler.open_help('reload'))
 
     def do_getall(self, arg):
-        self.view.display(self.db.get_all())
+        self.view.display()

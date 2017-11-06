@@ -3,18 +3,36 @@ import plotly
 import plotly.graph_objs
 import pygal
 import sys
+from abc import abstractmethod, ABCMeta
 
 
-class View:
-    # Tim
-    @staticmethod
-    def display(list_of_dictionaries):
+class Observer(metaclass=ABCMeta):
+    def __init__(self):
+        self.subject = None
+
+    @abstractmethod
+    def update(self):
+        pass
+
+    def set_subject(self, subject):
+        self.subject = subject
+
+
+class View(Observer):
+    def __init__(self):
+        Observer.__init__(self)
+        self.employees = []
+
+    def update(self):
+        self.employees = self.subject.get_state()
+
+    def display(self):
         count = 0
-        for dictionary in list_of_dictionaries:
+        for employee in self.employees:
             count += 1
             print("======== Employee {0} ==========".format(count))
-            for key in dictionary:
-                print("{0} = {1}".format(key, dictionary[key]))
+            for key in employee:
+                print("{0} = {1}".format(key, employee[key]))
 
     # Tim
     @staticmethod

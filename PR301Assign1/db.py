@@ -1,8 +1,32 @@
 import sqlite3
+from abc import abstractmethod, ABCMeta
 
 
-class DatabaseHandler:
+class Subject(metaclass=ABCMeta):
+    def __init__(self):
+        self.observers = []
+
+    def attach(self, observer):
+        self.observers.append(observer)
+        observer.set_subject(self)
+        observer.update()
+
+    def detach(self, observer):
+        self.observers.remove(observer)
+        observer.set_subject(None)
+
+    def notify(self):
+        for observer in self.observers:
+            observer.update()
+
+    @abstractmethod
+    def get_state(self):
+        pass
+
+
+class DatabaseHandler(Subject):
     def __init__(self, new_validator, database):
+        Subject.__init__(self)
         self.validator = new_validator
         self.database = database
 
@@ -23,6 +47,7 @@ class DatabaseHandler:
             print("Opened database successfully")
         finally:
             print("Finishing connecting to database")
+            self.notify()
 
     def open_db(self):
         try:
@@ -79,6 +104,7 @@ class DatabaseHandler:
                 print("Successfully added employee {0} to database".format(employee["EMPID"]))
                 self._connection.commit()
         self.close_db()
+        self.notify()
 
     #Rosemary
     def query(self, emp_id):
@@ -101,14 +127,14 @@ class DatabaseHandler:
             self.close_db()
             return employees
 
-    def get_all(self):
+    def get_state(self):
         self.open_db()
         sql_result = self._cursor.execute('SELECT * FROM employee')
         results = sql_result.fetchall()
         self.close_db()
         employees = []
         for data in results:
-            employee = {}
+            employee = dict()
             employee["EMPID"] = data[0]
             employee["GENDER"] = data[1]
             employee["AGE"] = data[2]
@@ -118,4 +144,3 @@ class DatabaseHandler:
             employee["BIRTHDAY"] = data[6]
             employees.append(employee)
         return employees
-
